@@ -119,7 +119,8 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "LoginForm";
-            Text = "Billing System-Login";
+            Text = "Billing System v1.0 - Login";
+            Load += LoginForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
