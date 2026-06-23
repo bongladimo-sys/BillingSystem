@@ -29,6 +29,7 @@ namespace BillingSystem
                 { "ExportExcel",       chkExportExcel    },
                 { "ExportPdf",         chkExportPdf      },
                 { "AuditLogs",         chkAuditLogs      },
+                { "ChangePassword",    chkChangePassword },
             };
 
             // Populate dropdown and load first role

@@ -38,9 +38,9 @@
             chkExportExcel = new CheckBox();
             chkExportPdf = new CheckBox();
             chkAuditLogs = new CheckBox();
-            chkChangePassword = new Button();
+            btnSave = new Button();
             btnClose = new Button();
-            checkBox1 = new CheckBox();
+            chkChangePassword = new CheckBox();
             SuspendLayout();
             // 
             // lblTitle
@@ -141,15 +141,15 @@
             chkAuditLogs.Text = "Audit Logs";
             chkAuditLogs.UseVisualStyleBackColor = true;
             // 
-            // chkChangePassword
+            // btnSave
             // 
-            chkChangePassword.Location = new Point(12, 372);
-            chkChangePassword.Name = "chkChangePassword";
-            chkChangePassword.Size = new Size(135, 29);
-            chkChangePassword.TabIndex = 16;
-            chkChangePassword.Text = "Save Permissions";
-            chkChangePassword.UseVisualStyleBackColor = true;
-            chkChangePassword.Click += btnSave_Click;
+            btnSave.Location = new Point(12, 372);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(135, 29);
+            btnSave.TabIndex = 16;
+            btnSave.Text = "Save Permissions";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnClose
             // 
@@ -161,24 +161,24 @@
             btnClose.UseVisualStyleBackColor = true;
             btnClose.Click += btnClose_Click;
             // 
-            // checkBox1
+            // chkChangePassword
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(141, 340);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(146, 24);
-            checkBox1.TabIndex = 18;
-            checkBox1.Text = "Change Password";
-            checkBox1.UseVisualStyleBackColor = true;
+            chkChangePassword.AutoSize = true;
+            chkChangePassword.Location = new Point(141, 340);
+            chkChangePassword.Name = "chkChangePassword";
+            chkChangePassword.Size = new Size(146, 24);
+            chkChangePassword.TabIndex = 18;
+            chkChangePassword.Text = "Change Password";
+            chkChangePassword.UseVisualStyleBackColor = true;
             // 
             // frmManagePermissions
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(432, 430);
-            Controls.Add(checkBox1);
-            Controls.Add(btnClose);
             Controls.Add(chkChangePassword);
+            Controls.Add(btnClose);
+            Controls.Add(btnSave);
             Controls.Add(chkAuditLogs);
             Controls.Add(chkExportPdf);
             Controls.Add(chkExportExcel);
@@ -210,8 +210,8 @@
         private CheckBox chkExportExcel;
         private CheckBox chkExportPdf;
         private CheckBox chkAuditLogs;
-        private Button chkChangePassword;
+        private Button btnSave;
         private Button btnClose;
-        private CheckBox checkBox1;
+        private CheckBox chkChangePassword;
     }
 }

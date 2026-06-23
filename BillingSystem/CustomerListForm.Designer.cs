@@ -55,6 +55,7 @@
             pnlBottom = new Panel();
             pnlTop = new Panel();
             btnChangePassword = new Button();
+            btnViewBillng = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -295,11 +296,23 @@
             btnChangePassword.UseVisualStyleBackColor = true;
             btnChangePassword.Click += btnChangePassword_Click;
             // 
+            // btnViewBillng
+            // 
+            btnViewBillng.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnViewBillng.Location = new Point(212, 338);
+            btnViewBillng.Name = "btnViewBillng";
+            btnViewBillng.Size = new Size(147, 29);
+            btnViewBillng.TabIndex = 16;
+            btnViewBillng.Text = "View Billing";
+            btnViewBillng.UseVisualStyleBackColor = true;
+            btnViewBillng.Click += btnViewBillng_Click;
+            // 
             // CustomerListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(782, 453);
+            Controls.Add(btnViewBillng);
             Controls.Add(btnChangePassword);
             Controls.Add(pnlTop);
             Controls.Add(pnlBottom);
@@ -356,5 +369,6 @@
         private Panel pnlBottom;
         private Panel pnlTop;
         private Button btnChangePassword;
+        private Button btnViewBillng;
     }
 }

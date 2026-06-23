@@ -552,6 +552,8 @@ namespace BillingSystem
                                         btnAuditLog.Enabled = isAllowed; break;
                                     case "ManagePermissions":
                                         btnManagePermissions.Enabled = isAllowed; break;
+                                    case "ChangePassword":
+                                        btnChangePassword.Enabled = isAllowed; break;
                                 }
                             }
                         }
@@ -622,6 +624,20 @@ namespace BillingSystem
 
 
             frm.ShowDialog();
+        }
+
+        private void btnViewBillng_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomerId == 0)
+            {
+                MessageBox.Show("Please Select a Customer to view billing records.",
+                    "No selection" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+           
+            frmBillingHistory form = new frmBillingHistory(_selectedCustomerId);
+            form.ShowDialog(this);
+
         }
     }
 }
