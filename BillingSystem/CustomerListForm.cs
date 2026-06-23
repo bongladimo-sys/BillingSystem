@@ -26,10 +26,11 @@ namespace BillingSystem
         // Stores the CustomerID of the currently selected row.
         // 0 means no customer is currently selected.
         private int _selectedCustomerId = 0;
-
+        private bool _ignoreSelection = true;
         private void dgvCustomers_SelectionChanged(object sender, EventArgs e)
         {
             // If no row is selected (e.g., grid is empty), do nothing
+            if (_ignoreSelection) return;
             if (dgvCustomers.CurrentRow == null) return;
 
             // Read the CustomerID value from the selected row
@@ -39,6 +40,8 @@ namespace BillingSystem
             {
                 _selectedCustomerId = id;
             }
+            else
+                _selectedCustomerId = 0;
         }
         private void dgvCustomers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -52,8 +55,50 @@ namespace BillingSystem
         {
             InitializeComponent();
             ConfigureDataGridView();
+            WireSelectionClearBehavior();
+            this.Shown += CustomerListForm_Shown;
+        }
+        private void CustomerListForm_Shown(object? sender, EventArgs e)
+        {
+            ClearCustomerSelection();
+            _ignoreSelection = false;
         }
 
+        private void ClearCustomerSelection()
+        {
+            dgvCustomers.ClearSelection();
+            dgvCustomers.CurrentCell = null;
+            _selectedCustomerId = 0;
+        }
+
+        private void WireSelectionClearBehavior()
+        {
+            this.MouseDown += ClearSelectionSurface_MouseDown;
+            pnlTop.MouseDown += ClearSelectionSurface_MouseDown;
+            pnlBottom.MouseDown += ClearSelectionSurface_MouseDown;
+            statusStrip1.MouseDown += ClearSelectionSurface_MouseDown;
+            lblTitle.MouseDown += ClearSelectionSurface_MouseDown;
+            txtSearch.MouseDown += ClearSelectionSurface_MouseDown;
+            dgvCustomers.MouseDown += dgvCustomers_MouseDown;
+        }
+
+        private void ClearSelectionSurface_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (_ignoreSelection) return;
+            ClearCustomerSelection();
+        }
+
+        private void dgvCustomers_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (_ignoreSelection) return;
+
+            var hit = dgvCustomers.HitTest(e.X, e.Y);
+
+            if (hit.Type == DataGridViewHitTestType.None)
+            {
+                ClearCustomerSelection();
+            }
+        }
         private void btnAdd_Click(object sender, EventArgs e)
 
         {
@@ -120,9 +165,6 @@ namespace BillingSystem
             ApplyPermissions();
             InitStatusStrip();
         }
-
-
-
 
 
         // Call this inside CustomerListForm_Load after ApplyPermissions()
@@ -583,6 +625,21 @@ namespace BillingSystem
             permForm.ShowDialog(this);
         }
 
+
+        private void btnViewBillng_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomerId == 0)
+            {
+                MessageBox.Show("Please Select a Customer to view billing records.",
+                    "No selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            frmBillingHistory form = new frmBillingHistory(_selectedCustomerId);
+            form.ShowDialog(this);
+
+            ClearCustomerSelection();
+        }
         private void ApplyTheme()
         {
             // Form background
@@ -626,17 +683,8 @@ namespace BillingSystem
             frm.ShowDialog();
         }
 
-        private void btnViewBillng_Click(object sender, EventArgs e)
+        private void dgvCustomers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (_selectedCustomerId == 0)
-            {
-                MessageBox.Show("Please Select a Customer to view billing records.",
-                    "No selection" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-           
-            frmBillingHistory form = new frmBillingHistory(_selectedCustomerId);
-            form.ShowDialog(this);
 
         }
     }

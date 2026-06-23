@@ -42,6 +42,7 @@
             dgvBilling.RowHeadersWidth = 51;
             dgvBilling.Size = new Size(900, 280);
             dgvBilling.TabIndex = 0;
+            dgvBilling.CellContentClick += dgvBilling_CellContentClick;
             // 
             // lblCustomerName
             // 

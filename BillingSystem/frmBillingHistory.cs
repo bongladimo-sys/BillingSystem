@@ -125,5 +125,10 @@ namespace BillingSystem
         {
             this.Close();
         }
+
+        private void dgvBilling_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

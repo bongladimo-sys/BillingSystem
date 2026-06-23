@@ -49,28 +49,29 @@
             // lblTagline
             // 
             lblTagline.AutoSize = true;
-            lblTagline.Font = new Font("Segoe UI", 11F);
+            lblTagline.Font = new Font("Segoe UI", 12F);
             lblTagline.ForeColor = Color.FromArgb(189, 215, 238);
-            lblTagline.Location = new Point(93, 140);
+            lblTagline.Location = new Point(93, 91);
             lblTagline.Name = "lblTagline";
-            lblTagline.Size = new Size(310, 25);
+            lblTagline.Size = new Size(321, 28);
             lblTagline.TabIndex = 1;
             lblTagline.Text = " Water Billing Management System ";
             lblTagline.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblLoading
             // 
-            lblLoading.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            lblLoading.Font = new Font("Segoe UI", 10F, FontStyle.Italic);
             lblLoading.ForeColor = Color.LightBlue;
-            lblLoading.Location = new Point(102, 215);
+            lblLoading.Location = new Point(93, 167);
             lblLoading.Name = "lblLoading";
-            lblLoading.Size = new Size(62, 25);
+            lblLoading.Size = new Size(103, 25);
             lblLoading.TabIndex = 2;
             lblLoading.Text = "Loading... ";
             lblLoading.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splashTimer
             // 
+            splashTimer.Interval = 2500;
             splashTimer.Tick += splashTimer_Tick;
             // 
             // SplashScreen
