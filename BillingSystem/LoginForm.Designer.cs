@@ -31,7 +31,7 @@
             lblTitle = new Label();
             lblUserName = new Label();
             lblPassword = new Label();
-            txtUserName = new TextBox();
+            txtUsername = new TextBox();
             txtPassword = new TextBox();
             btnLogin = new Button();
             Cancel = new Button();
@@ -68,12 +68,12 @@
             lblPassword.TabIndex = 2;
             lblPassword.Text = "Password:";
             // 
-            // txtUserName
+            // txtUsername
             // 
-            txtUserName.Location = new Point(170, 65);
-            txtUserName.Name = "txtUserName";
-            txtUserName.Size = new Size(219, 27);
-            txtUserName.TabIndex = 3;
+            txtUsername.Location = new Point(170, 65);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(219, 27);
+            txtUsername.TabIndex = 3;
             // 
             // txtPassword
             // 
@@ -92,6 +92,7 @@
             btnLogin.TabIndex = 5;
             btnLogin.Text = "Login\r\n";
             btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
             // 
             // Cancel
             // 
@@ -112,7 +113,7 @@
             Controls.Add(Cancel);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);
-            Controls.Add(txtUserName);
+            Controls.Add(txtUsername);
             Controls.Add(lblPassword);
             Controls.Add(lblUserName);
             Controls.Add(lblTitle);
@@ -130,7 +131,7 @@
         private Label lblTitle;
         private Label lblUserName;
         private Label lblPassword;
-        private TextBox txtUserName;
+        private TextBox txtUsername;
         private TextBox txtPassword;
         private Button btnLogin;
         private Button Cancel;

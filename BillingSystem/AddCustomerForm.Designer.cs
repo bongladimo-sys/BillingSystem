@@ -30,15 +30,15 @@
         {
             lbltitle = new Label();
             lblFullname = new Label();
-            txtaddress = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            lbladdress = new Label();
+            txtFullName = new TextBox();
+            txtAddress = new TextBox();
             lblcontact = new Label();
-            textBox3 = new TextBox();
+            txtContact = new TextBox();
             lblemail = new Label();
-            textBox4 = new TextBox();
+            txtEmail = new TextBox();
             lblbalance = new Label();
-            textBox5 = new TextBox();
+            txtBalance = new TextBox();
             btnsave = new Button();
             btnclear = new Button();
             btnback = new Button();
@@ -64,29 +64,29 @@
             lblFullname.TabIndex = 1;
             lblFullname.Text = "Full Name:";
             // 
-            // txtaddress
+            // lbladdress
             // 
-            txtaddress.AutoSize = true;
-            txtaddress.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            txtaddress.Location = new Point(25, 111);
-            txtaddress.Name = "txtaddress";
-            txtaddress.Size = new Size(70, 20);
-            txtaddress.TabIndex = 2;
-            txtaddress.Text = "Address:\r\n";
+            lbladdress.AutoSize = true;
+            lbladdress.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lbladdress.Location = new Point(25, 111);
+            lbladdress.Name = "lbladdress";
+            lbladdress.Size = new Size(70, 20);
+            lbladdress.TabIndex = 2;
+            lbladdress.Text = "Address:\r\n";
             // 
-            // textBox1
+            // txtFullName
             // 
-            textBox1.Location = new Point(116, 79);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(220, 27);
-            textBox1.TabIndex = 3;
+            txtFullName.Location = new Point(116, 79);
+            txtFullName.Name = "txtFullName";
+            txtFullName.Size = new Size(220, 27);
+            txtFullName.TabIndex = 3;
             // 
-            // textBox2
+            // txtAddress
             // 
-            textBox2.Location = new Point(116, 112);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(220, 27);
-            textBox2.TabIndex = 4;
+            txtAddress.Location = new Point(116, 112);
+            txtAddress.Name = "txtAddress";
+            txtAddress.Size = new Size(220, 27);
+            txtAddress.TabIndex = 4;
             // 
             // lblcontact
             // 
@@ -98,12 +98,12 @@
             lblcontact.TabIndex = 5;
             lblcontact.Text = "Contact No.";
             // 
-            // textBox3
+            // txtContact
             // 
-            textBox3.Location = new Point(116, 155);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(220, 27);
-            textBox3.TabIndex = 6;
+            txtContact.Location = new Point(116, 155);
+            txtContact.Name = "txtContact";
+            txtContact.Size = new Size(220, 27);
+            txtContact.TabIndex = 6;
             // 
             // lblemail
             // 
@@ -115,12 +115,12 @@
             lblemail.TabIndex = 7;
             lblemail.Text = "Email:";
             // 
-            // textBox4
+            // txtEmail
             // 
-            textBox4.Location = new Point(116, 196);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(220, 27);
-            textBox4.TabIndex = 8;
+            txtEmail.Location = new Point(116, 196);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(220, 27);
+            txtEmail.TabIndex = 8;
             // 
             // lblbalance
             // 
@@ -132,13 +132,13 @@
             lblbalance.TabIndex = 9;
             lblbalance.Text = "Initial Bal.";
             // 
-            // textBox5
+            // txtBalance
             // 
-            textBox5.Location = new Point(121, 240);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(215, 27);
-            textBox5.TabIndex = 10;
-            textBox5.Text = "0.00";
+            txtBalance.Location = new Point(121, 240);
+            txtBalance.Name = "txtBalance";
+            txtBalance.Size = new Size(215, 27);
+            txtBalance.TabIndex = 10;
+            txtBalance.Text = "0.00";
             // 
             // btnsave
             // 
@@ -149,6 +149,7 @@
             btnsave.TabIndex = 11;
             btnsave.Text = "Save";
             btnsave.UseVisualStyleBackColor = true;
+            btnsave.Click += btnsave_Click;
             // 
             // btnclear
             // 
@@ -178,19 +179,20 @@
             Controls.Add(btnback);
             Controls.Add(btnclear);
             Controls.Add(btnsave);
-            Controls.Add(textBox5);
+            Controls.Add(txtBalance);
             Controls.Add(lblbalance);
-            Controls.Add(textBox4);
+            Controls.Add(txtEmail);
             Controls.Add(lblemail);
-            Controls.Add(textBox3);
+            Controls.Add(txtContact);
             Controls.Add(lblcontact);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
-            Controls.Add(txtaddress);
+            Controls.Add(txtAddress);
+            Controls.Add(txtFullName);
+            Controls.Add(lbladdress);
             Controls.Add(lblFullname);
             Controls.Add(lbltitle);
             Name = "AddCustomerForm";
             Text = "Billing System - Add Customer";
+            Load += AddCustomerForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -199,15 +201,15 @@
 
         private Label lbltitle;
         private Label lblFullname;
-        private Label txtaddress;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private Label lbladdress;
+        private TextBox txtFullName;
+        private TextBox txtAddress;
         private Label lblcontact;
-        private TextBox textBox3;
+        private TextBox txtContact;
         private Label lblemail;
-        private TextBox textBox4;
+        private TextBox txtEmail;
         private Label lblbalance;
-        private TextBox textBox5;
+        private TextBox txtBalance;
         private Button btnsave;
         private Button btnclear;
         private Button btnback;
