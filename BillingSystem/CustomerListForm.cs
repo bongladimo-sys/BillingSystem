@@ -27,6 +27,8 @@ namespace BillingSystem
         // 0 means no customer is currently selected.
         private int _selectedCustomerId = 0;
         private bool _ignoreSelection = true;
+        private readonly LoginForm? _loginForm;
+        private bool _isLoggingOut;
         private void dgvCustomers_SelectionChanged(object sender, EventArgs e)
         {
             // If no row is selected (e.g., grid is empty), do nothing
@@ -546,18 +548,33 @@ namespace BillingSystem
         private void btnLogout_Click(object sender, EventArgs e)
         {
             AuditLogger.Log("LOGOUT",
-    $"{AppSession.CurrentFullName} ({AppSession.CurrentRole}) logged out.");
+                $"{AppSession.CurrentFullName} ({AppSession.CurrentRole}) logged out.");
             AppSession.Clear();
+            _isLoggingOut = true;
+            if (_loginForm != null && !_loginForm.IsDisposed)
+            {
+                _loginForm.ResetForLogin();
+                _loginForm.Show();
+            }
+            else
+            {
+                new LoginForm().Show();
+            }
 
+            this.Close();
 
         }
         private void ApplyPermissions()
         {
             try
             {
+                btnusermanagement.Enabled = false;
+
                 using (var conn = DatabaseConnection.GetConnection())
                 {
                     conn.Open();
+                    PermissionService.HasPermission(AppSession.CurrentRole, "ManageUsers");
+
                     string sql = @"SELECT PermissionName, IsAllowed
                            FROM   UserPermissions
                            WHERE  Role = @Role;";
@@ -594,6 +611,10 @@ namespace BillingSystem
                                         btnAuditLog.Enabled = isAllowed; break;
                                     case "ManagePermissions":
                                         btnManagePermissions.Enabled = isAllowed; break;
+                                    case "ManageUsers":
+                                        btnusermanagement.Visible = isAllowed;
+                                        btnusermanagement.Enabled = isAllowed;
+                                        break;
                                     case "ChangePassword":
                                         btnChangePassword.Enabled = isAllowed; break;
                                 }
@@ -695,5 +716,3 @@ namespace BillingSystem
         }
     }
 }
-
-

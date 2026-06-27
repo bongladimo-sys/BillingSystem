@@ -34,7 +34,7 @@
             UserName = new DataGridViewTextBoxColumn();
             FullName = new DataGridViewTextBoxColumn();
             Role = new DataGridViewTextBoxColumn();
-            Created = new DataGridViewTextBoxColumn();
+            colCreated = new DataGridViewTextBoxColumn();
             btnAdd = new Button();
             btnEdit = new Button();
             btndelete = new Button();
@@ -45,29 +45,30 @@
             // lblusermanagement
             // 
             lblusermanagement.AutoSize = true;
-            lblusermanagement.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblusermanagement.Location = new Point(168, 23);
+            lblusermanagement.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblusermanagement.Location = new Point(168, 20);
             lblusermanagement.Name = "lblusermanagement";
-            lblusermanagement.Size = new Size(156, 23);
+            lblusermanagement.Size = new Size(185, 28);
             lblusermanagement.TabIndex = 0;
             lblusermanagement.Text = "User Management";
             // 
             // dgvUsers
             // 
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUsers.Columns.AddRange(new DataGridViewColumn[] { UserId, UserName, FullName, Role, Created });
+            dgvUsers.Columns.AddRange(new DataGridViewColumn[] { UserId, UserName, FullName, Role, colCreated });
             dgvUsers.Location = new Point(168, 63);
             dgvUsers.Name = "dgvUsers";
             dgvUsers.RowHeadersWidth = 51;
-            dgvUsers.Size = new Size(680, 255);
+            dgvUsers.Size = new Size(677, 255);
             dgvUsers.TabIndex = 1;
+            dgvUsers.SelectionChanged += dgvUsers_SelectionChanged;
             // 
             // UserId
             // 
             UserId.HeaderText = "User ID";
             UserId.MinimumWidth = 6;
             UserId.Name = "UserId";
-            UserId.Width = 125;
+            UserId.Width = 80;
             // 
             // UserName
             // 
@@ -90,42 +91,49 @@
             Role.Name = "Role";
             Role.Width = 125;
             // 
-            // Created
+            // colCreated
             // 
-            Created.HeaderText = "Created";
-            Created.MinimumWidth = 6;
-            Created.Name = "Created";
-            Created.Width = 125;
+            colCreated.HeaderText = "Created At";
+            colCreated.MinimumWidth = 6;
+            colCreated.Name = "colCreated";
+            colCreated.Width = 170;
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = SystemColors.ButtonHighlight;
             btnAdd.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnAdd.ForeColor = Color.Black;
             btnAdd.Location = new Point(21, 63);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(122, 29);
             btnAdd.TabIndex = 2;
             btnAdd.Text = "Add User";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAddUser_Click;
             // 
             // btnEdit
             // 
             btnEdit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnEdit.ForeColor = Color.Black;
             btnEdit.Location = new Point(21, 110);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(120, 29);
             btnEdit.TabIndex = 3;
             btnEdit.Text = "Edit User";
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEditUser_Click;
             // 
             // btndelete
             // 
             btndelete.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btndelete.ForeColor = Color.Crimson;
             btndelete.Location = new Point(21, 167);
             btndelete.Name = "btndelete";
             btndelete.Size = new Size(120, 29);
             btndelete.TabIndex = 4;
             btndelete.Text = "Delete User";
             btndelete.UseVisualStyleBackColor = true;
+            btndelete.Click += btnDeleteUser_Click;
             // 
             // btnClose
             // 
@@ -136,12 +144,13 @@
             btnClose.TabIndex = 5;
             btnClose.Text = "C L O S E";
             btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
             // 
             // UserListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(882, 393);
+            ClientSize = new Size(909, 360);
             Controls.Add(btnClose);
             Controls.Add(btndelete);
             Controls.Add(btnEdit);
@@ -150,6 +159,7 @@
             Controls.Add(lblusermanagement);
             Name = "UserListForm";
             Text = "User List Form";
+            Load += FrmUserListForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -159,14 +169,14 @@
 
         private Label lblusermanagement;
         private DataGridView dgvUsers;
-        private DataGridViewTextBoxColumn UserId;
-        private DataGridViewTextBoxColumn UserName;
-        private DataGridViewTextBoxColumn FullName;
-        private DataGridViewTextBoxColumn Role;
-        private DataGridViewTextBoxColumn Created;
         private Button btnAdd;
         private Button btnEdit;
         private Button btndelete;
         private Button btnClose;
+        private DataGridViewTextBoxColumn UserId;
+        private DataGridViewTextBoxColumn UserName;
+        private DataGridViewTextBoxColumn FullName;
+        private DataGridViewTextBoxColumn Role;
+        private DataGridViewTextBoxColumn colCreated;
     }
 }

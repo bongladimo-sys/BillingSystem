@@ -120,6 +120,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Billing System v1.0 - Login";
             Load += LoginForm_Load;
             ResumeLayout(false);

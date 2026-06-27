@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BillingSystem.Utils;
+using Org.BouncyCastle.Asn1.BC;
 
 namespace BillingSystem
 {
@@ -132,6 +133,12 @@ namespace BillingSystem
             txtUsername.Focus();
         }
 
+        public void ResetForLogin()
+        {
+            txtPassword.Clear();
+            txtUsername.Clear();
+            txtUsername.Focus();
+        }
         
     }
 }

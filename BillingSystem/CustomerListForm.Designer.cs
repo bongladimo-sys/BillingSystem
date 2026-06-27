@@ -89,13 +89,15 @@
             // 
             // Customerid
             // 
+            Customerid.FillWeight = 66.14001F;
             Customerid.HeaderText = "ID";
-            Customerid.MinimumWidth = 6;
+            Customerid.MinimumWidth = 4;
             Customerid.Name = "Customerid";
             Customerid.ReadOnly = true;
             // 
             // Fullname
             // 
+            Fullname.FillWeight = 69.22654F;
             Fullname.HeaderText = "Full Name";
             Fullname.MinimumWidth = 6;
             Fullname.Name = "Fullname";
@@ -103,6 +105,7 @@
             // 
             // Address
             // 
+            Address.FillWeight = 69.22654F;
             Address.HeaderText = "Address";
             Address.MinimumWidth = 6;
             Address.Name = "Address";
@@ -110,6 +113,7 @@
             // 
             // Contactnumber
             // 
+            Contactnumber.FillWeight = 69.22654F;
             Contactnumber.HeaderText = "Contact No";
             Contactnumber.MinimumWidth = 6;
             Contactnumber.Name = "Contactnumber";
@@ -117,6 +121,7 @@
             // 
             // Email
             // 
+            Email.FillWeight = 69.22654F;
             Email.HeaderText = "Email";
             Email.MinimumWidth = 6;
             Email.Name = "Email";
@@ -124,6 +129,7 @@
             // 
             // Balance
             // 
+            Balance.FillWeight = 69.22654F;
             Balance.HeaderText = "Balance";
             Balance.MinimumWidth = 6;
             Balance.Name = "Balance";
@@ -134,7 +140,7 @@
             btnAdd.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnAdd.Location = new Point(12, 291);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(94, 29);
+            btnAdd.Size = new Size(106, 29);
             btnAdd.TabIndex = 2;
             btnAdd.Text = "Add\r\n";
             btnAdd.UseVisualStyleBackColor = true;
@@ -143,9 +149,9 @@
             // btnDelete
             // 
             btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDelete.Location = new Point(112, 291);
+            btnDelete.Location = new Point(12, 338);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(94, 29);
+            btnDelete.Size = new Size(106, 29);
             btnDelete.TabIndex = 3;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -153,13 +159,15 @@
             // 
             // btnLogout
             // 
+            btnLogout.BackColor = Color.Red;
             btnLogout.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnLogout.Location = new Point(212, 291);
+            btnLogout.ForeColor = Color.Transparent;
+            btnLogout.Location = new Point(12, 383);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(94, 29);
+            btnLogout.Size = new Size(106, 29);
             btnLogout.TabIndex = 4;
             btnLogout.Text = "Logout";
-            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.UseVisualStyleBackColor = false;
             btnLogout.Click += btnLogout_Click;
             // 
             // btnSearch
@@ -186,9 +194,9 @@
             // btnAnalytics
             // 
             btnAnalytics.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAnalytics.Location = new Point(12, 338);
+            btnAnalytics.Location = new Point(156, 338);
             btnAnalytics.Name = "btnAnalytics";
-            btnAnalytics.Size = new Size(94, 29);
+            btnAnalytics.Size = new Size(147, 29);
             btnAnalytics.TabIndex = 7;
             btnAnalytics.Text = " Analytics";
             btnAnalytics.UseVisualStyleBackColor = true;
@@ -219,9 +227,9 @@
             // btnAuditLog
             // 
             btnAuditLog.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAuditLog.Location = new Point(112, 338);
+            btnAuditLog.Location = new Point(156, 291);
             btnAuditLog.Name = "btnAuditLog";
-            btnAuditLog.Size = new Size(94, 29);
+            btnAuditLog.Size = new Size(147, 29);
             btnAuditLog.TabIndex = 10;
             btnAuditLog.Text = "Audit Log";
             btnAuditLog.UseVisualStyleBackColor = true;
@@ -230,6 +238,7 @@
             // btnManagePermissions
             // 
             btnManagePermissions.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnManagePermissions.ForeColor = Color.Black;
             btnManagePermissions.Location = new Point(593, 338);
             btnManagePermissions.Name = "btnManagePermissions";
             btnManagePermissions.Size = new Size(177, 29);
@@ -275,9 +284,9 @@
             // 
             // pnlBottom
             // 
-            pnlBottom.Location = new Point(12, 426);
+            pnlBottom.Location = new Point(12, 440);
             pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(758, 34);
+            pnlBottom.Size = new Size(758, 20);
             pnlBottom.TabIndex = 13;
             // 
             // pnlTop
@@ -289,35 +298,41 @@
             // 
             // btnChangePassword
             // 
+            btnChangePassword.BackColor = Color.Black;
             btnChangePassword.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnChangePassword.ForeColor = Color.Transparent;
             btnChangePassword.Location = new Point(593, 291);
             btnChangePassword.Name = "btnChangePassword";
             btnChangePassword.Size = new Size(177, 29);
             btnChangePassword.TabIndex = 15;
             btnChangePassword.Text = "Change Password";
-            btnChangePassword.UseVisualStyleBackColor = true;
+            btnChangePassword.UseVisualStyleBackColor = false;
             btnChangePassword.Click += btnChangePassword_Click;
             // 
             // btnViewBillng
             // 
+            btnViewBillng.BackColor = Color.CornflowerBlue;
             btnViewBillng.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnViewBillng.Location = new Point(212, 338);
+            btnViewBillng.ForeColor = Color.Transparent;
+            btnViewBillng.Location = new Point(156, 383);
             btnViewBillng.Name = "btnViewBillng";
             btnViewBillng.Size = new Size(147, 29);
             btnViewBillng.TabIndex = 16;
             btnViewBillng.Text = "View Billing";
-            btnViewBillng.UseVisualStyleBackColor = true;
+            btnViewBillng.UseVisualStyleBackColor = false;
             btnViewBillng.Click += btnViewBillng_Click;
             // 
             // btnusermanagement
             // 
+            btnusermanagement.BackColor = Color.Black;
             btnusermanagement.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnusermanagement.ForeColor = Color.Transparent;
             btnusermanagement.Location = new Point(595, 383);
             btnusermanagement.Name = "btnusermanagement";
             btnusermanagement.Size = new Size(175, 29);
             btnusermanagement.TabIndex = 17;
             btnusermanagement.Text = "User Management";
-            btnusermanagement.UseVisualStyleBackColor = true;
+            btnusermanagement.UseVisualStyleBackColor = false;
             btnusermanagement.Click += btnusermanagement_Click;
             // 
             // CustomerListForm
@@ -364,12 +379,6 @@
         private Button btnLogout;
         private Button btnSearch;
         private TextBox txtSearch;
-        private DataGridViewTextBoxColumn Customerid;
-        private DataGridViewTextBoxColumn Fullname;
-        private DataGridViewTextBoxColumn Address;
-        private DataGridViewTextBoxColumn Contactnumber;
-        private DataGridViewTextBoxColumn Email;
-        private DataGridViewTextBoxColumn Balance;
         private Button btnAnalytics;
         private Button btnExportExcel;
         private Button btnExportPdf;
@@ -385,5 +394,11 @@
         private Button btnChangePassword;
         private Button btnViewBillng;
         private Button btnusermanagement;
+        private DataGridViewTextBoxColumn Customerid;
+        private DataGridViewTextBoxColumn Fullname;
+        private DataGridViewTextBoxColumn Address;
+        private DataGridViewTextBoxColumn Contactnumber;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewTextBoxColumn Balance;
     }
 }

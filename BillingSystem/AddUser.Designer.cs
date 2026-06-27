@@ -105,6 +105,7 @@
             txtpassword.Size = new Size(263, 27);
             txtpassword.TabIndex = 6;
             txtpassword.Text = "********";
+            txtpassword.UseSystemPasswordChar = true;
             // 
             // txtfullname
             // 
@@ -130,6 +131,7 @@
             btnsave.TabIndex = 9;
             btnsave.Text = "S A V E";
             btnsave.UseVisualStyleBackColor = true;
+            btnsave.Click += btnSave_Click;
             // 
             // btncancel
             // 
@@ -140,6 +142,7 @@
             btncancel.TabIndex = 10;
             btncancel.Text = "C A N C E L";
             btncancel.UseVisualStyleBackColor = true;
+            btncancel.Click += btnCancel_Click;
             // 
             // AddUser
             // 
@@ -158,7 +161,9 @@
             Controls.Add(lblusername);
             Controls.Add(lbladduser);
             Name = "AddUser";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "AddUser";
+            Load += AddUser_Load;
             ResumeLayout(false);
             PerformLayout();
         }

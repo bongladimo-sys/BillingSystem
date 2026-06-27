@@ -1,280 +1,278 @@
-﻿using BillingSystem.Database;
+using BillingSystem.Database;
 using BillingSystem.Utils;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BillingSystem
 {
     public partial class UserListForm : Form
     {
-            public UserListForm()
+        private int _selectedUserId;
+        private bool _ignoreSelection = true;
+
+        public UserListForm()
+        {
+            InitializeComponent();
+            ConfigureDataGridView();
+            Shown += FrmUserListForm_Shown;
+        }
+
+        private void FrmUserListForm_Load(object sender, EventArgs e)
+        {
+            if (!PermissionService.HasPermission(AppSession.CurrentRole, "ManageUsers"))
             {
-                InitializeComponent();
-                ConfigureDataGridView();
-                Shown += FrmUserListForm_Shown;
+                MessageBox.Show("You do not have permission to access User Management.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Cancel;
+                Close();
+                return;
             }
 
-            private void FrmUserListForm_Load(object sender, EventArgs e)
+            ApplyTheme();
+            LoadUsers();
+            AuditLogger.Log("VIEW_USER_MANAGEMENT",
+                $"{AppSession.CurrentUsername} opened User Management.");
+        }
+
+        private void FrmUserListForm_Shown(object? sender, EventArgs e)
+        {
+            ClearUserSelection();
+            _ignoreSelection = false;
+        }
+
+        private void ConfigureDataGridView()
+        {
+            dgvUsers.AutoGenerateColumns = false;
+            UserId.DataPropertyName = "UserID";
+            UserName.DataPropertyName = "Username";
+            FullName.DataPropertyName = "FullName";
+            Role.DataPropertyName = "Role";
+            colCreated.DataPropertyName = "CreatedAt";
+        }
+
+        private void LoadUsers()
+        {
+            try
             {
-                if (!PermissionService.HasPermission(AppSession.CurrentRole, "ManageUsers"))
+                using (var conn = DatabaseConnection.GetConnection())
                 {
-                    MessageBox.Show("You do not have permission to access User Management.",
-                        "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    DialogResult = DialogResult.Cancel;
-                    Close();
-                    return;
-                }
+                    conn.Open();
 
-                ApplyTheme();
-                LoadUsers();
-                AuditLogger.Log("VIEW_USER_MANAGEMENT",
-                    $"{AppSession.CurrentUsername} opened User Management.");
-            }
-
-            private void FrmUserListForm_Shown(object? sender, EventArgs e)
-            {
-                ClearUserSelection();
-                _ignoreSelection = false;
-            }
-
-            private void ConfigureDataGridView()
-            {
-                dgvUsers.AutoGenerateColumns = false;
-                UserId.DataPropertyName = "UserID";
-                UserName.DataPropertyName = "Username";
-                FullName.DataPropertyName = "FullName";
-                Role.DataPropertyName = "Role";
-            }
-
-            private void LoadUsers()
-            {
-                try
-                {
-                    using (var conn = DatabaseConnection.GetConnection())
-                    {
-                        conn.Open();
-
-                        string sql = @"SELECT UserID,
+                    string sql = @"SELECT UserID,
                                           Username,
                                           FullName,
-                                          Role
+                                          Role,
+                                          CreatedAt
                                    FROM   Users
                                    ORDER  BY Username ASC;";
 
-                        using (var adapter = new MySqlDataAdapter(sql, conn))
-                        {
-                            DataTable dt = new DataTable();
-                            adapter.Fill(dt);
-                            dgvUsers.DataSource = dt;
-                            lblusermanagement.Text = $"User Management ({dt.Rows.Count} user(s))";
-                        }
+                    using (var adapter = new MySqlDataAdapter(sql, conn))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        dgvUsers.DataSource = dt;
+                        lblusermanagement.Text = $"User Management ({dt.Rows.Count} user(s))";
                     }
+                }
 
-                    ClearUserSelection();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading users:\n{ex.Message}",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                ClearUserSelection();
             }
-
-            private void ClearUserSelection()
+            catch (Exception ex)
             {
-                dgvUsers.ClearSelection();
-                dgvUsers.CurrentCell = null;
+                MessageBox.Show($"Error loading users:\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ClearUserSelection()
+        {
+            dgvUsers.ClearSelection();
+            dgvUsers.CurrentCell = null;
+            _selectedUserId = 0;
+        }
+
+        private void dgvUsers_SelectionChanged(object sender, EventArgs e)
+        {
+            if (_ignoreSelection) return;
+            if (dgvUsers.CurrentRow == null) return;
+
+            object? idValue = dgvUsers.CurrentRow.Cells["UserId"].Value;
+            if (idValue != null && int.TryParse(idValue.ToString(), out int userId))
+            {
+                _selectedUserId = userId;
+            }
+            else
+            {
                 _selectedUserId = 0;
             }
+        }
 
-            private void dgvUsers_SelectionChanged(object sender, EventArgs e)
+        private void btnAddUser_Click(object sender, EventArgs e)
+        {
+            using (var form = new AddUser())
             {
-                if (_ignoreSelection) return;
-                if (dgvUsers.CurrentRow == null) return;
-
-                object? idValue = dgvUsers.CurrentRow.Cells["colUserId"].Value;
-                if (idValue != null && int.TryParse(idValue.ToString(), out int userId))
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    _selectedUserId = userId;
-                }
-                else
-                {
-                    _selectedUserId = 0;
+                    LoadUsers();
                 }
             }
+        }
 
-            private void btnAddUser_Click(object sender, EventArgs e)
+        private void btnEditUser_Click(object sender, EventArgs e)
+        {
+            if (_selectedUserId == 0)
             {
-                using (var form = new AddUser())
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                    {
-                        LoadUsers();
-                    }
-                }
+                MessageBox.Show("Please select a user to edit.",
+                    "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            private void btnEditUser_Click(object sender, EventArgs e)
+            using (var form = new AddUser(_selectedUserId))
             {
-                if (_selectedUserId == 0)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    MessageBox.Show("Please select a user to edit.",
-                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                using (var form = new AddUserForm(_selectedUserId))
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                    {
-                        LoadUsers();
-                    }
+                    LoadUsers();
                 }
             }
+        }
 
-            private void btnDeleteUser_Click(object sender, EventArgs e)
+        private void btnDeleteUser_Click(object sender, EventArgs e)
+        {
+            if (_selectedUserId == 0)
             {
-                if (_selectedUserId == 0)
-                {
-                    MessageBox.Show("Please select a user to delete.",
-                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                TryDeleteSelectedUser();
+                MessageBox.Show("Please select a user to delete.",
+                    "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            private void TryDeleteSelectedUser()
-            {
-                try
-                {
-                    using (var conn = DatabaseConnection.GetConnection())
-                    {
-                        conn.Open();
+            TryDeleteSelectedUser();
+        }
 
-                        string userSql = @"SELECT UserID, Username, Role
+        private void TryDeleteSelectedUser()
+        {
+            try
+            {
+                using (var conn = DatabaseConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    string userSql = @"SELECT UserID, Username, Role
                                        FROM   Users
                                        WHERE  UserID = @UserID;";
 
-                        string selectedUsername = string.Empty;
-                        string selectedRole = string.Empty;
+                    string selectedUsername = string.Empty;
+                    string selectedRole = string.Empty;
 
-                        using (var userCmd = new MySqlCommand(userSql, conn))
+                    using (var userCmd = new MySqlCommand(userSql, conn))
+                    {
+                        userCmd.Parameters.AddWithValue("@UserID", _selectedUserId);
+
+                        using (var reader = userCmd.ExecuteReader())
                         {
-                            userCmd.Parameters.AddWithValue("@UserID", _selectedUserId);
-
-                            using (var reader = userCmd.ExecuteReader())
+                            if (!reader.Read())
                             {
-                                if (!reader.Read())
-                                {
-                                    MessageBox.Show("The selected user no longer exists.",
-                                        "Delete User", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    LoadUsers();
-                                    return;
-                                }
-
-                                selectedUsername = reader.GetString("Username");
-                                selectedRole = reader.GetString("Role");
+                                MessageBox.Show("The selected user no longer exists.",
+                                    "Delete User", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                LoadUsers();
+                                return;
                             }
-                        }
 
-                        if (_selectedUserId == AppSession.CurrentUserID)
-                        {
-                            MessageBox.Show("You cannot delete your own account while logged in.",
-                                "Delete Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
+                            selectedUsername = reader.GetString("Username");
+                            selectedRole = reader.GetString("Role");
                         }
+                    }
 
-                        if (string.Equals(selectedRole, "Admin", StringComparison.OrdinalIgnoreCase))
-                        {
-                            string countSql = @"SELECT COUNT(*)
+                    if (_selectedUserId == AppSession.CurrentUserID)
+                    {
+                        MessageBox.Show("You cannot delete your own account while logged in.",
+                            "Delete Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (string.Equals(selectedRole, "Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string countSql = @"SELECT COUNT(*)
                                             FROM   Users
                                             WHERE  Role = 'Admin';";
 
-                            using (var countCmd = new MySqlCommand(countSql, conn))
-                            {
-                                long adminCount = Convert.ToInt64(countCmd.ExecuteScalar());
-                                if (adminCount <= 1)
-                                {
-                                    MessageBox.Show("You cannot delete the last remaining Admin account.",
-                                        "Delete Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    return;
-                                }
-                            }
-                        }
-
-                        DialogResult confirm = MessageBox.Show(
-                            $"Are you sure you want to delete user '{selectedUsername}'?",
-                            "Confirm Delete",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Warning);
-
-                        if (confirm != DialogResult.Yes)
-                            return;
-
-                        string deleteSql = @"DELETE FROM Users
-                                         WHERE  UserID = @UserID;";
-
-                        using (var deleteCmd = new MySqlCommand(deleteSql, conn))
+                        using (var countCmd = new MySqlCommand(countSql, conn))
                         {
-                            deleteCmd.Parameters.AddWithValue("@UserID", _selectedUserId);
-
-                            int rowsAffected = deleteCmd.ExecuteNonQuery();
-                            if (rowsAffected > 0)
+                            long adminCount = Convert.ToInt64(countCmd.ExecuteScalar());
+                            if (adminCount <= 1)
                             {
-                                AuditLogger.Log("DELETE_USER",
-                                    $"User '{selectedUsername}' deleted by {AppSession.CurrentUsername}.");
-
-                                MessageBox.Show("User deleted successfully.",
-                                    "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                LoadUsers();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Delete failed. The record may no longer exist.",
-                                    "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("You cannot delete the last remaining Admin account.",
+                                    "Delete Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting user:\n{ex.Message}",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    DialogResult confirm = MessageBox.Show(
+                        $"Are you sure you want to delete user '{selectedUsername}'?",
+                        "Confirm Delete",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (confirm != DialogResult.Yes)
+                        return;
+
+                    string deleteSql = @"DELETE FROM Users
+                                         WHERE  UserID = @UserID;";
+
+                    using (var deleteCmd = new MySqlCommand(deleteSql, conn))
+                    {
+                        deleteCmd.Parameters.AddWithValue("@UserID", _selectedUserId);
+
+                        int rowsAffected = deleteCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            AuditLogger.Log("DELETE_USER",
+                                $"User '{selectedUsername}' deleted by {AppSession.CurrentUsername}.");
+
+                            MessageBox.Show("User deleted successfully.",
+                                "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadUsers();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Delete failed. The record may no longer exist.",
+                                "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
-
-            private void btnClose_Click(object sender, EventArgs e)
+            catch (Exception ex)
             {
-                Close();
-            }
-
-            private void ApplyTheme()
-            {
-                BackColor = AppTheme.BackgroundColor;
-                btnAdd.BackColor = AppTheme.SuccessColor;
-                btnAdd.ForeColor = Color.White;
-                btnEdit.BackColor = AppTheme.PrimaryColor;
-                btnEdit.ForeColor = Color.White;
-                btndelete.BackColor = AppTheme.DangerColor;
-                btndelete.ForeColor = Color.White;
-                btnClose.BackColor = AppTheme.SecondaryColor;
-                btnClose.ForeColor = Color.White;
-
-                dgvUsers.ColumnHeadersDefaultCellStyle.BackColor = AppTheme.PrimaryColor;
-                dgvUsers.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                dgvUsers.ColumnHeadersDefaultCellStyle.Font =
-                    new Font("Segoe UI", 9f, FontStyle.Bold);
-                dgvUsers.AlternatingRowsDefaultCellStyle.BackColor = AppTheme.GridRowAlt;
+                MessageBox.Show($"Error deleting user:\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void ApplyTheme()
+        {
+            BackColor = AppTheme.BackgroundColor;
+            btnAdd.BackColor = AppTheme.SuccessColor;
+            btnAdd.ForeColor = Color.White;
+            btnEdit.BackColor = AppTheme.PrimaryColor;
+            btnEdit.ForeColor = Color.White;
+            btndelete.BackColor = AppTheme.DangerColor;
+            btndelete.ForeColor = Color.White;
+            btnClose.BackColor = AppTheme.SecondaryColor;
+            btnClose.ForeColor = Color.White;
+
+            dgvUsers.ColumnHeadersDefaultCellStyle.BackColor = AppTheme.PrimaryColor;
+            dgvUsers.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvUsers.ColumnHeadersDefaultCellStyle.Font =
+                new Font("Segoe UI", 9f, FontStyle.Bold);
+            dgvUsers.AlternatingRowsDefaultCellStyle.BackColor = AppTheme.GridRowAlt;
+        }
     }
-}
 }
