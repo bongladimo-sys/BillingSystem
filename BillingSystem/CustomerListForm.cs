@@ -687,6 +687,12 @@ namespace BillingSystem
         {
 
         }
+
+        private void btnusermanagement_Click(object sender, EventArgs e)
+        {
+            UserListForm frm = new UserListForm();
+            frm.ShowDialog(this);
+        }
     }
 }
 

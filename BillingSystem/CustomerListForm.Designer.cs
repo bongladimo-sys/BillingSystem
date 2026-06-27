@@ -56,6 +56,7 @@
             pnlTop = new Panel();
             btnChangePassword = new Button();
             btnViewBillng = new Button();
+            btnusermanagement = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -233,7 +234,7 @@
             btnManagePermissions.Name = "btnManagePermissions";
             btnManagePermissions.Size = new Size(177, 29);
             btnManagePermissions.TabIndex = 11;
-            btnManagePermissions.Text = "Manage Permissions.";
+            btnManagePermissions.Text = "Manage Permissions\r\n";
             btnManagePermissions.UseVisualStyleBackColor = true;
             btnManagePermissions.Click += btnManagePermissions_Click;
             // 
@@ -241,7 +242,7 @@
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { lblStatusUser, lblStatusSep, lblStatusTime });
-            statusStrip1.Location = new Point(0, 427);
+            statusStrip1.Location = new Point(0, 469);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(782, 26);
             statusStrip1.TabIndex = 12;
@@ -274,9 +275,9 @@
             // 
             // pnlBottom
             // 
-            pnlBottom.Location = new Point(19, 394);
+            pnlBottom.Location = new Point(12, 426);
             pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(754, 25);
+            pnlBottom.Size = new Size(758, 34);
             pnlBottom.TabIndex = 13;
             // 
             // pnlTop
@@ -308,11 +309,23 @@
             btnViewBillng.UseVisualStyleBackColor = true;
             btnViewBillng.Click += btnViewBillng_Click;
             // 
+            // btnusermanagement
+            // 
+            btnusermanagement.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnusermanagement.Location = new Point(595, 383);
+            btnusermanagement.Name = "btnusermanagement";
+            btnusermanagement.Size = new Size(175, 29);
+            btnusermanagement.TabIndex = 17;
+            btnusermanagement.Text = "User Management";
+            btnusermanagement.UseVisualStyleBackColor = true;
+            btnusermanagement.Click += btnusermanagement_Click;
+            // 
             // CustomerListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(782, 453);
+            ClientSize = new Size(782, 495);
+            Controls.Add(btnusermanagement);
             Controls.Add(btnViewBillng);
             Controls.Add(btnChangePassword);
             Controls.Add(pnlTop);
@@ -330,7 +343,7 @@
             Controls.Add(btnAdd);
             Controls.Add(dgvCustomers);
             Controls.Add(lblTitle);
-            MaximumSize = new Size(800, 500);
+            MaximizeBox = false;
             Name = "CustomerListForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Billig System - Customer List";
@@ -371,5 +384,6 @@
         private Panel pnlTop;
         private Button btnChangePassword;
         private Button btnViewBillng;
+        private Button btnusermanagement;
     }
 }
