@@ -612,7 +612,7 @@ namespace BillingSystem
                                     case "ManagePermissions":
                                         btnManagePermissions.Enabled = isAllowed; break;
                                     case "ManageUsers":
-                                        btnusermanagement.Visible = isAllowed;
+                                        btnusermanagement.Visible = true;
                                         btnusermanagement.Enabled = isAllowed;
                                         break;
                                     case "ChangePassword":

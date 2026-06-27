@@ -298,7 +298,7 @@
             // 
             // btnChangePassword
             // 
-            btnChangePassword.BackColor = Color.Black;
+            btnChangePassword.BackColor = Color.CornflowerBlue;
             btnChangePassword.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnChangePassword.ForeColor = Color.Transparent;
             btnChangePassword.Location = new Point(593, 291);
@@ -324,7 +324,7 @@
             // 
             // btnusermanagement
             // 
-            btnusermanagement.BackColor = Color.Black;
+            btnusermanagement.BackColor = Color.CornflowerBlue;
             btnusermanagement.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnusermanagement.ForeColor = Color.Transparent;
             btnusermanagement.Location = new Point(595, 383);
