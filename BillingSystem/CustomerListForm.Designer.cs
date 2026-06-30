@@ -57,8 +57,12 @@
             btnChangePassword = new Button();
             btnViewBillng = new Button();
             btnusermanagement = new Button();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            archieveCToolStripMenuItem = new ToolStripMenuItem();
+            viewArchiveToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             statusStrip1.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // lblTitle
@@ -335,6 +339,26 @@
             btnusermanagement.UseVisualStyleBackColor = false;
             btnusermanagement.Click += btnusermanagement_Click;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { archieveCToolStripMenuItem, viewArchiveToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(211, 80);
+            // 
+            // archieveCToolStripMenuItem
+            // 
+            archieveCToolStripMenuItem.Name = "archieveCToolStripMenuItem";
+            archieveCToolStripMenuItem.Size = new Size(210, 24);
+            archieveCToolStripMenuItem.Text = "Archive Customer";
+            // 
+            // viewArchiveToolStripMenuItem
+            // 
+            viewArchiveToolStripMenuItem.Name = "viewArchiveToolStripMenuItem";
+            viewArchiveToolStripMenuItem.Size = new Size(210, 24);
+            viewArchiveToolStripMenuItem.Text = "View Archive";
+            viewArchiveToolStripMenuItem.Click += viewArhieveToolStripMenuItem_Click;
+            // 
             // CustomerListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -366,6 +390,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -400,5 +425,8 @@
         private DataGridViewTextBoxColumn Contactnumber;
         private DataGridViewTextBoxColumn Email;
         private DataGridViewTextBoxColumn Balance;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem archieveCToolStripMenuItem;
+        private ToolStripMenuItem viewArchiveToolStripMenuItem;
     }
 }

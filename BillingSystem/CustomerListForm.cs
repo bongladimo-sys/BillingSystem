@@ -714,5 +714,38 @@ namespace BillingSystem
             UserListForm frm = new UserListForm();
             frm.ShowDialog(this);
         }
+
+        private void dgvCustomer_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_ignoreSelection) return;
+            
+            var hit = dgvCustomers.HitTest(e.X, e.Y);
+            
+            if(e.Button == MouseButtons.Right && hit.RowIndex >= 0)
+            {
+                int columnIndex = hit.ColumnIndex >= 0 ? hit.ColumnIndex : 0;
+                dgvCustomers.ClearSelection();
+                dgvCustomers.CurrentCell = dgvCustomers.Rows[hit.RowIndex].Cells[columnIndex];
+                dgvCustomers.Rows[hit.RowIndex].Selected = true;
+                return;
+            }
+
+            if(hit.Type == DataGridViewHitTestType.None)
+            {
+                ClearCustomerSelection();
+            }
+
+        }
+
+        private void viewArhieveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var form = new Archived_Customers())
+            {
+                form.ShowDialog(this);
+            }
+
+            LoadCustomers();
+            ClearCustomerSelection();
+        }
     }
 }
